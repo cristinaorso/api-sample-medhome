@@ -33,7 +33,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Boolean existsByEmailAndName(String email, String name);
 
     // Select * from tb_user where email = {}
-    Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email); //Retorna o objeto User completo (dados) ou vazio
 
     @Query("SELECT u FROM User u WHERE u.password = 'algumacoisa'")
     List<User> listaParaRelatorio();

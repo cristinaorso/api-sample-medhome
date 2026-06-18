@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+// é uma classe utilitária com métodos estáticos, chamada diretamente onde for necessário.
+// Token JWT: é uma string dividida em 3 partes separadas por ponto:
+//Header — algoritmo usado
+//Payload — os dados (email, id, tipo do usuário)
+//Assinatura — garante que o token não foi adulterado
+
 public class JwtUtil {
     private static final String SECRET_KEY = "chaveSuperSecretaParaJWTdeExemplo!@#123"; // Chave secreta (use uma mais segura)
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1000 milisegundos * 60 segundos * 60 minutos * 24 horas
@@ -21,7 +27,7 @@ public class JwtUtil {
     }
 
     public static String generateToken(String email, UUID id, UserType type) {
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>(); //claims = Variável local do tipo Map — sendo montada para virar o payload
         claims.put("id", id);
         claims.put("email", email);
         claims.put("type", type.ordinal());
@@ -33,7 +39,7 @@ public class JwtUtil {
                 .compact(); // Gera o token JWT
     }
 
-    public static Claims validateToken(String token) {
+    public static Claims validateToken(String token) { //Claims = Classe da biblioteca jjwt — representa o payload já dentro do token
         try {
             return Jwts.parser()
                     .verifyWith(getSigningKey()) // Define a chave para verificação

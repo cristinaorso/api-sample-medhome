@@ -15,7 +15,7 @@ import java.util.UUID;
 @Table(name = "tb_user")
 // Define explicitamente o nome da tabela no banco.
 // Sem essa annotation, o JPA utilizaria o nome da classe como padrão.
-public class User implements UserDetails {
+public class User implements UserDetails { //UserDetails -> interface do Spring Security que diz: "esta classe representa um usuário autenticável"
 
     @Id
     // Define o atributo que será a chave primária da tabela.

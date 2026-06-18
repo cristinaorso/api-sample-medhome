@@ -20,6 +20,8 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encoder;
 
     // Método construtor com Injeção de dependência
+    //O UserService não cria seus próprios objetos — ele recebe o repository e o encoder prontos pelo Spring.
+    // Isso se chama Injeção de Dependência. O PasswordEncoder foi configurado no ConfigSecurity
     public UserService(UserRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
         this.encoder = encoder;
@@ -45,7 +47,7 @@ public class UserService implements UserDetailsService {
             throw new Exception("Password informado inválido!");
         // TODO fazer validação de qualidade de senha
 
-        //criptografar a senha com hash
+        //criptografar a senha em um hash BCrypt (a senha original nunca é salva no banco)
         newUser.setPassword(encoder.encode(newUser.getPassword()));
 
         if (newUser.getType() == null)
